@@ -3,17 +3,27 @@ Qual estrutura de dados pesquisa mais rápido ? Which data structure searches fa
 
 .NET 6 - Windows
 
-|                 Method |         Mean |      Error |     StdDev |       Median |  Gen 0 | Allocated |
-|----------------------- |-------------:|-----------:|-----------:|-------------:|-------:|----------:|
-|           HashContains |     23.29 ns |   0.490 ns |   0.409 ns |     23.08 ns |      - |         - |
-|      ImmutHashContains |     46.14 ns |   0.843 ns |   0.704 ns |     45.88 ns |      - |         - |
-| MemorySpanBinarySearch |    628.04 ns |   5.353 ns |   5.007 ns |    627.23 ns |      - |         - |
-|               ImmutDic |    668.97 ns |  11.958 ns |  18.967 ns |    662.60 ns |      - |         - |
-|  ImmutListBinarySearch |    689.02 ns |  10.970 ns |  12.633 ns |    686.23 ns |      - |         - |
-|            ImmutSorted |    689.14 ns |   7.126 ns |   6.665 ns |    688.52 ns |      - |         - |
-|      MemorySpanIndexOf |  3,247.42 ns | 110.774 ns | 316.045 ns |  3,095.50 ns |      - |         - |
-|     ImmutArrayContains |  3,619.14 ns |  68.539 ns |  67.314 ns |  3,606.90 ns |      - |         - |
-|           ListContains |  3,774.16 ns |  64.205 ns |  73.939 ns |  3,736.42 ns |      - |         - |
-|      ImmutListContains |  8,866.64 ns |  71.787 ns |  67.150 ns |  8,837.80 ns |      - |         - |
-|                ListAny |  9,678.05 ns | 145.869 ns | 136.446 ns |  9,625.16 ns | 0.0305 |     128 B |
-|           ImmutListAny | 34,776.05 ns | 309.655 ns | 274.501 ns | 34,900.43 ns |      - |     160 B |
+// * Summary *
+
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.19043.1826 (21H1/May2021Update)
+Intel Core i7-10510U CPU 1.80GHz, 1 CPU, 8 logical and 4 physical cores
+.NET SDK=6.0.300
+  [Host]     : .NET 6.0.5 (6.0.522.21309), X64 RyuJIT
+  DefaultJob : .NET 6.0.5 (6.0.522.21309), X64 RyuJIT
+
+
+|                 Method |         Mean |      Error |     StdDev |  Gen 0 | Allocated |
+|----------------------- |-------------:|-----------:|-----------:|-------:|----------:|
+|           HashContains |     23.01 ns |   0.141 ns |   0.132 ns |      - |         - |
+|            DicContains |     23.99 ns |   0.418 ns |   0.326 ns |      - |         - |
+|              ImmutHash |     46.21 ns |   0.548 ns |   0.486 ns |      - |         - |
+|            ImmutSorted |    589.97 ns |   9.229 ns |   7.205 ns |      - |         - |
+| ImmutSortedDicContains |    620.11 ns |   6.162 ns |   5.463 ns |      - |         - |
+|  ImmutListBinarySearch |    661.63 ns |   3.305 ns |   2.930 ns |      - |         - |
+| MemorySpanBinarySearch |    739.81 ns |  27.719 ns |  78.183 ns |      - |         - |
+|      MemorySpanIndexOf |  3,046.30 ns |  22.449 ns |  19.901 ns |      - |         - |
+|           ListContains |  3,601.54 ns |  32.839 ns |  27.422 ns |      - |         - |
+|     ImmutArrayContains |  3,759.68 ns |  30.846 ns |  27.344 ns |      - |         - |
+|      ImmutListContains |  8,975.55 ns | 113.464 ns | 100.583 ns |      - |         - |
+|                ListAny |  9,493.77 ns | 127.848 ns | 113.334 ns | 0.0305 |     128 B |
+|           ImmutListAny | 35,660.85 ns | 491.934 ns | 460.155 ns |      - |     160 B |

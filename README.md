@@ -6,7 +6,7 @@ Qual estrutura de dados pesquisa mais rápido ? Which data structure searches fa
 |                 Method |         Mean |      Error |     StdDev |       Median |  Gen 0 | Allocated |
 |----------------------- |-------------:|-----------:|-----------:|-------------:|-------:|----------:|
 |           HashContains |     23.29 ns |   0.490 ns |   0.409 ns |     23.08 ns |      - |         - |
-|              ImmutHash |     46.14 ns |   0.843 ns |   0.704 ns |     45.88 ns |      - |         - |
+|      ImmutHashContains |     46.14 ns |   0.843 ns |   0.704 ns |     45.88 ns |      - |         - |
 | MemorySpanBinarySearch |    628.04 ns |   5.353 ns |   5.007 ns |    627.23 ns |      - |         - |
 |               ImmutDic |    668.97 ns |  11.958 ns |  18.967 ns |    662.60 ns |      - |         - |
 |  ImmutListBinarySearch |    689.02 ns |  10.970 ns |  12.633 ns |    686.23 ns |      - |         - |

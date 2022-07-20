@@ -14,6 +14,7 @@ namespace Common
 
         private HashSet<string> _hash;
         private List<string> _list;
+        private Dictionary<string, bool> _dic;
         private ImmutableHashSet<string> _immutHash;
         private ImmutableSortedSet<string> _immutSorted;
         private ImmutableSortedDictionary<string, bool> _immutDic;
@@ -27,7 +28,7 @@ namespace Common
             //Numero par
             int num = 1000;
             _list = new List<string>(num);
-            var dic = new Dictionary<string, bool>(num);
+            _dic = new Dictionary<string, bool>(num);
             _hash = new HashSet<string>(num);
 
             for (int i = 0; i < num; i++)
@@ -35,7 +36,7 @@ namespace Common
                 //Simulando uma chave do tipo string
                 var key = i.ToString() + "_" + i.ToString();
                 _list.Add(key);
-                dic.Add(key, true);
+                _dic.Add(key, true);
                 _hash.Add(key);
             }
 
@@ -48,7 +49,7 @@ namespace Common
 
             _immutHash = _list.ToImmutableHashSet();
             _immutSorted = _list.ToImmutableSortedSet();
-            _immutDic = dic.ToImmutableSortedDictionary();
+            _immutDic = _dic.ToImmutableSortedDictionary();
             _immutList = _list.ToImmutableList();
             _immutArray = _list.ToImmutableArray();
 
@@ -82,35 +83,35 @@ namespace Common
         public void MemorySpanBinarySearch()
         {
             var key = GetKey();
-            _ = _memory.Span.BinarySearch(key);
+            var result = _memory.Span.BinarySearch(key);
         }
 
         [Benchmark]
         public void MemorySpanIndexOf()
         {
             var key = GetKey();
-            _ = _memory.Span.IndexOf(key);
+            var result = _memory.Span.IndexOf(key);
         }
 
         [Benchmark]
         public void HashContains()
         {
             var key = GetKey();
-            _ = _hash.Contains(key);
+            var result = _hash.Contains(key);
         }
 
         [Benchmark]
         public void ListContains()
         {
             var key = GetKey();
-            _ = _list.Contains(key);
+            var result = _list.Contains(key);
         }
 
         [Benchmark]
         public void ListAny()
         {
             var key = GetKey();
-            _ = _list.Any(i => i == key);
+            var result = _list.Any(i => i == key);
         }
 
         [Benchmark]
@@ -124,35 +125,42 @@ namespace Common
         public void ImmutArrayContains()
         {
             var key = GetKey();
-            _ = _immutArray.Contains(key);
+            var result = _immutArray.Contains(key);
         }
 
         [Benchmark]
         public void ImmutSorted()
         {
             var key = GetKey();
-            _ = _immutSorted.Contains(key);
+            var result = _immutSorted.Contains(key);
         }
 
         [Benchmark]
-        public void ImmutDic()
+        public void DicContains()
         {
             var key = GetKey();
-            _ = _immutDic.ContainsKey(key);
+            var result = _dic.ContainsKey(key);
+        }
+
+        [Benchmark]
+        public void ImmutSortedDicContains()
+        {
+            var key = GetKey();
+            var result = _immutDic.ContainsKey(key);
         }
 
         [Benchmark]
         public void ImmutListContains()
         {
             var key = GetKey();
-            _ = _immutList.Contains(key);
+            var result = _immutList.Contains(key);
         }
 
         [Benchmark]
         public void ImmutListBinarySearch()
         {
             var key = GetKey();
-            _ = _immutList.BinarySearch(key);
+            var result = _immutList.BinarySearch(key);
         }
 
         ///VERY SLOW
@@ -160,7 +168,7 @@ namespace Common
         public void ImmutListAny()
         {
             var key = GetKey();
-            _ = _immutList.Any(i => i == key);
+            var result = _immutList.Any(i => i == key);
         }
     }
 

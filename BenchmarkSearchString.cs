@@ -19,7 +19,7 @@ namespace Common
         private ImmutableSortedDictionary<string, bool> _immutDic;
         private ImmutableList<string> _immutList;
         private ImmutableArray<string> _immutArray;
-        //private ReadOnlyMemory<string> _memory;
+        private ReadOnlyMemory<string> _memory;
 
         [GlobalSetup]
         public void Setup()
@@ -52,7 +52,7 @@ namespace Common
             _immutList = _list.ToImmutableList();
             _immutArray = _list.ToImmutableArray();
 
-           // _memory = _immutArray.AsMemory();
+            _memory = _immutArray.AsMemory();
         }
 
         private int _cont = 0;
@@ -78,39 +78,25 @@ namespace Common
             return _containsStartKey;
         }
 
-        //[Benchmark]
-        //public void MemoryEquals()
-        //{
-        //    var key = GetKey();
-        //    _ = _memory.Equals(key);
-        //}
+        [Benchmark]
+        public void MemorySpanBinarySearch()
+        {
+            var key = GetKey();
+            _ = _memory.Span.BinarySearch(key);
+        }
 
-        //[Benchmark]
-        //public void MemorySpanBinarySearch()
-        //{
-        //    var key = GetKey();
-        //    _ = _memory.Span.BinarySearch(key);
-        //}
-
-        //[Benchmark]
-        //public void MemorySpanIndexOf()
-        //{
-        //    var key = GetKey();
-        //    _ = _memory.Span.IndexOf(key);
-        //}
+        [Benchmark]
+        public void MemorySpanIndexOf()
+        {
+            var key = GetKey();
+            _ = _memory.Span.IndexOf(key);
+        }
 
         [Benchmark]
         public void HashContains()
         {
             var key = GetKey();
             _ = _hash.Contains(key);
-        }
-
-        [Benchmark]
-        public void HashEquals()
-        {
-            var key = GetKey();
-            _ = _hash.Equals(key);
         }
 
         [Benchmark]
@@ -121,25 +107,17 @@ namespace Common
         }
 
         [Benchmark]
-        public void ListEquals()
-        {
-            var key = GetKey();
-            _ = _list.Equals(key);
-        }
-
-        [Benchmark]
         public void ListAny()
         {
             var key = GetKey();
             _ = _list.Any(i => i == key);
         }
 
-
         [Benchmark]
         public void ImmutHash()
         {
             var key = GetKey();
-            _ = _immutHash.Contains(key);
+            var result = _immutHash.Contains(key);
         }
 
         [Benchmark]
@@ -150,13 +128,6 @@ namespace Common
         }
 
         [Benchmark]
-        public void ImmutArrayEquals()
-        {
-            var key = GetKey();
-            _ = _immutArray.Equals(key);
-        }
-
-        [Benchmark]
         public void ImmutSorted()
         {
             var key = GetKey();
@@ -164,24 +135,10 @@ namespace Common
         }
 
         [Benchmark]
-        public void ImmutSortedEquals()
-        {
-            var key = GetKey();
-            _ = _immutSorted.Equals(key);
-        }
-
-        [Benchmark]
         public void ImmutDic()
         {
             var key = GetKey();
             _ = _immutDic.ContainsKey(key);
-        }
-
-        [Benchmark]
-        public void ImmutListEquals()
-        {
-            var key = GetKey();
-            _ = _immutList.Equals(key);
         }
 
         [Benchmark]
